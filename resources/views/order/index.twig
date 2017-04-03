@@ -1,0 +1,112 @@
+{% extends 'templates/app.twig' %}
+
+{% block content %}
+	<div class="row">
+		<form action="{{ path_for('order.create') }}" method="POST" class="form-horizontal" autocomplete="off">
+			<div class="row">
+				<div class="col-md-8">
+					<div class="row">
+						<div class="col-md-6">
+							<h4>Your details</h4>
+							<hr>
+							<div class="form-group {% if errors.email %}has-error{% endif %}">
+								<label for="email" class="col-sm-3 control-label">E-mail</label>
+								<div class="col-sm-9">
+									<input type="email" class="form-control" id="email" name="email" value="{{ old.email }}" placeholder="">
+									{% if errors.email %}
+									<span class="help-block">{{ errors.email | first }}</span>
+									{% endif %}
+								</div>
+							</div>
+							<div class="form-group {% if errors.name %}has-error{% endif %}">
+								<label for="name" class="col-sm-3 control-label">Full Name</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="name" name="name" value="{{ old.name }}" placeholder="">
+									{% if errors.name %}
+									<span class="help-block">{{ errors.name | first }}</span>
+									{% endif %}
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<h4>Shipping address</h4>
+							<hr>
+							<div class="form-group {% if errors.address1 %}has-error{% endif %}">
+								<label for="address1" class="col-sm-4 control-label">Address #1</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" id="address1" name="address1" value="{{ old.address1 }}" placeholder="">
+									{% if errors.address1 %}
+									<span class="help-block">{{ errors.address1 | first }}</span>
+									{% endif %}
+								</div>
+							</div>
+							<div class="form-group {% if errors.address2 %}has-error{% endif %}">
+								<label for="address2" class="col-sm-4 control-label">Address #2</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" id="address2" name="address2" value="{{ old.address2 }}" placeholder="">
+									{% if errors.address2 %}
+									<span class="help-block">{{ errors.address2 | first }}</span>
+									{% endif %}
+								</div>
+							</div>
+							<div class="form-group {% if errors.city %}has-error{% endif %}">
+								<label for="city" class="col-sm-4 control-label">City</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" id="city" name="city" value="{{ old.city }}" placeholder="">
+									{% if errors.city %}
+									<span class="help-block">{{ errors.city | first }}</span>
+									{% endif %}
+								</div>
+							</div>
+							<div class="form-group {% if errors.postal_code %}has-error{% endif %}">
+								<label for="postal-code" class="col-sm-4 control-label">Postal Code</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" id="postal-code" name="postal_code" value="{{ old.postal_code }}" placeholder="">
+									{% if errors.postal_code %}
+									<span class="help-block">{{ errors.postal_code | first }}</span>
+									{% endif %}
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<h4>Payment</h4>
+							<hr>
+							<div id="payment">
+								<h4 style="text-align: center; margin: 40px auto;">Payment initializing...</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="well">
+						<div class="order-summary-heading">Order Summary</div>
+						{% include 'cart/partials/contents.twig' %}
+						{% include 'cart/partials/summary.twig' %}
+
+						<button type="submit" class="btn btn-default">Place Order</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" src="{{ base_url() }}/assets/vendor/braintree/braintree-2.24.1.min.js"></script>
+<script type="text/javascript">
+	$( document ).ready(function() {
+		$.ajax({
+			url: '{{ path_for("braintree.token") }}',
+			type: 'GET',
+			dataType: 'JSON'
+		}).success(function(data) {
+			$('#payment').empty();
+			braintree.setup(data.token, 'dropin', {
+				container: 'payment'
+			});
+		});
+	});
+</script>
+{% endblock %}

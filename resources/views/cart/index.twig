@@ -1,0 +1,92 @@
+{% extends 'templates/app.twig' %}
+
+{% block content %}
+	<div class="row">
+		{% if basket.itemCount %}
+		<div class="col-md-8">
+			<div class="well">
+				<div class="summary-heading">
+					Summary
+				</div>
+				<table class="table">
+					<thead>
+						<tr>
+							<td>Product</td>
+							<td>Image</td>
+							<td>Price</th>
+							<td>Quantity</td>
+						</tr>
+					</thead>
+					<tbody>
+						{% for item in basket.all %}
+						<tr>
+							<td><a href="{{ path_for('product.get', { slug: item.slug }) }}">{{ item.title }}</a></td>
+							<td class="order-thumb"><img class="thumbnail img-responsive" src="{{ base_url() }}/assets/img/ph.jpg" alt="{{ product.title }}"></td>
+							<td>&euro; {{ item.price | number_format(2) }}</td>
+							<td>
+								<form class="form-inline" method="POST" action="{{ path_for('cart.update', { slug: item.slug }) }}">
+									<select onchange="this.form.submit();" class="form-control input-sm quantity-select" name="quantity">
+										{% for num in 1..item.stock %}
+										<option value="{{ num }}" {% if num == item.quantity %} selected="selected"{% endif %}>{{ num }}</option>
+										{% endfor %}
+										<option value="">None</option>
+									</select>
+								</form>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>	
+		</div>
+		{% else %}
+		<div class="col-md-12">
+			<div class="alert alert-info" role="alert">
+				You have no items in the basket. <a href="{{ path_for('home') }}">Start Shopping</a>
+			</div>
+		</div>
+		{% endif %}
+		<div class="col-md-4">
+			{% if basket.itemCount and basket.subTotal %}
+			<div class="well">
+				<div class="order-summary-heading">Cart Summary</div>
+				{% include 'cart/partials/summary.twig' %}
+				<div class="clearfix">
+					<a href="{{ path_for('home') }}" class="btn btn-success">Coninue Shopping</a>
+					<a href="{{ path_for('order.index') }}" class="btn btn-primary pull-right">Checkout</a>
+				</div>
+			</div>
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}
+
+{% block styles %}
+	<link rel="stylesheet" type="text/css" href="{{ base_url() }}/assets/vendor/select/css/select-theme-default.css">
+{% endblock %}
+
+{% block scripts %}
+	<script type="text/javascript" src="{{ base_url() }}/assets/vendor/tether/js/tether.min.js"></script>
+	<script type="text/javascript" src="{{ base_url() }}/assets/vendor/select/js/select.min.js"></script>
+
+	<script type="text/javascript">
+		(function($) {
+
+			var init, setupQuantitySelect;
+			init = function() {
+				setupQuantitySelect();
+			}
+			setupQuantitySelect = function() {
+				var select = $('.quantity-select');
+				select.each(function(index, element) {
+					return new Select({
+						el: element,
+						alignToHighlighted: 'always'
+					});
+				});
+			}
+			init();
+
+		})(jQuery);
+	</script>
+{% endblock %}

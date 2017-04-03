@@ -1,0 +1,14 @@
+<table class="table">
+	<tr>
+		<td>Sub-total</td>
+		<td>&euro; {{ basket.subTotal | number_format(2) }}</td>
+	</tr>
+	<tr>
+		<td>Shipping</td>
+		<td>&euro; 5.50</td>
+	</tr>
+	<tr>
+		<td class="info">Total</td>
+		<td class="info">&euro; {{ (basket.subTotal + 5.50) | number_format(2) }}</td>
+	</tr>
+</table>

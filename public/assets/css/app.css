@@ -1,0 +1,105 @@
+
+html,
+body {
+	font-family: 'Lato';
+	margin-bottom: 100px;
+}
+
+.navbar {
+	border-radius: 0;
+}
+
+.thumbnail img {
+	max-height: 100px;
+}
+
+.thumbnail p {
+	margin-bottom: 20px;
+}
+
+.btn {
+	border-radius: 0;
+}
+
+.price {
+	padding: 7px 25px;
+	background-color: #f1f1f1;
+	font-weight: bold;
+}
+
+.panel {
+	border-radius: 0;
+}
+
+.product-desc {
+	margin: 10px 0;
+}
+
+span.label {
+	border-radius: 0;
+}
+
+.well {
+	border-radius: 0;
+	border: none;
+	box-shadow: none;
+}
+
+.summary-heading {
+	font-size: 18px;
+	margin: 10px 0;
+}
+
+.alert {
+	border-radius: 0;
+	border: none;
+	box-shadow: none;
+}
+
+.thumbnail {
+	border-radius: 0;
+}
+
+.order-summary-heading {
+	font-size: 18px;
+	margin-bottom: 20px;
+}
+
+select.form-control {
+	border-radius: 0;
+	box-shadow: none;
+}
+
+.product-thumb > .thumbnail {
+	max-height: 200px;
+}
+
+.order-thumb > .thumbnail {
+	max-height: 70px;
+	border: none;
+	margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="textarea"] {
+	border-radius: 0;
+	box-shadow: none;
+}
+
+.select-target.select-theme-default {
+	display: inline;
+	border-radius: 0;
+	border: 1px solid #ddd;
+}
+
+.select.select-theme-default .select-options .select-option {
+    padding: 0.5rem 3em 0.5rem 2.5em;
+    text-align: center;
+    overflow: visible;
+}
+
+.select.select-theme-default .select-content {
+	/*max-height: 100%;*/
+}

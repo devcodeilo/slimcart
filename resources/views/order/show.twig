@@ -1,0 +1,35 @@
+{% extends 'templates/app.twig' %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-md-12">
+			<h4>Order #{{ order.id }}</h4>
+			<hr>
+			<div class="row">
+				<div class="col-md-6">
+					<h4>Shipping to</h4>
+					<hr>
+					{{ order.address.address1 }}<br>
+					{{ order.address.address2 }}<br>
+					{{ order.address.city }}<br>
+					{{ order.address.postal_code }}
+				</div>
+				<div class="col-md-6">
+					<h4>Items</h4>
+					<hr>
+					{% for product in order.products %}
+						<a href="{{ path_for('product.get', { slug: product.slug }) }}">{{ product.title }}</a> (x{{ product.pivot.quantity }})<br>
+					{% endfor %}
+
+					<hr>
+
+					<p>
+						Shipping: &euro; 5.50<br>
+						Total: &euro; {{ order.total | number_format(2) }}
+					</p>
+
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
